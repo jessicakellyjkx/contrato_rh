@@ -1,0 +1,6 @@
+py4web>=1.20230715.1
+pdfkit>=1.0.0
+yatl>=0.1.0
+pydal>=20230715.1
+bottle>=0.12.25
+python-dateutil>=2.8.2 

@@ -1,0 +1,25 @@
+[[extend 'layout.html']]
+<link rel="stylesheet" href="/myapp/static/css/main.css">
+
+<div class="section">
+  <div class="form-container" style="max-width:600px;">
+    <h2>Detalhes do Funcionário</h2>
+    <div class="employee-details active">
+      <div class="detail-row"><span class="detail-label">Nome:</span> [[=funcionario.nome]]</div>
+      <div class="detail-row"><span class="detail-label">ID:</span> [[=funcionario.id]]</div>
+      <div class="detail-row"><span class="detail-label">CPF:</span> [[=funcionario.cpf]]</div>
+      <div class="detail-row"><span class="detail-label">RG:</span> [[=funcionario.rg]]</div>
+      <div class="detail-row"><span class="detail-label">Data de Nascimento:</span> [[=funcionario.data_nascicmento]]</div>
+      <div class="detail-row"><span class="detail-label">Idade:</span> [[=funcionario.idade]]</div>
+      <div class="detail-row"><span class="detail-label">Estado Civil:</span> [[=funcionario.estado_civil]]</div>
+      <div class="detail-row"><span class="detail-label">Sexo:</span> [[=funcionario.sexo]]</div>
+      <div class="detail-row"><span class="detail-label">Endereço:</span> [[=funcionario.rua]], [[=funcionario.bairro]], [[=funcionario.cidade]] - [[=funcionario.estado]], CEP: [[=funcionario.cep]]</div>
+      <div class="detail-row"><span class="detail-label">Cargo:</span> [[=funcionario.cargo]]</div>
+      <div class="detail-row"><span class="detail-label">Data de Entrada:</span> [[=funcionario.data_entrada]]</div>
+      <div class="detail-row"><span class="detail-label">Salário:</span> R$ [[=funcionario.salario]]</div>
+    </div>
+    <div class="actions">
+      <a href="[[=URL('funcionarios')]]" class="button">Voltar para Lista</a>
+    </div>
+  </div>
+</div> 

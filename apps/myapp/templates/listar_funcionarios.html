@@ -1,0 +1,77 @@
+[[extend 'layout.html']]
+<link rel="stylesheet" href="/myapp/static/css/main.css">
+
+<div class="section">
+  <div class="form-container" style="max-width:1200px;">
+    <h2>Lista de Funcionários</h2>
+    <div class="form-group">
+      <input type="text" id="searchInput" class="form-group-input" placeholder="Pesquisar por ID ou nome do funcionário...">
+    </div>
+    <div class="employee-list" id="employeeList">
+      <!-- Lista de funcionários será preenchida via JavaScript -->
+    </div>
+    <div class="actions">
+      <a href="[[=URL('cadastrar_funcionario')]]" class="button">Cadastrar Novo Funcionário</a>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const employeeList = document.getElementById('employeeList');
+    let employees = [];
+
+    // Função para carregar funcionários
+    function loadEmployees() {
+        fetch('[[=URL('listar_funcionarios')]]')
+            .then(response => response.json())
+            .then(data => {
+                employees = data;
+                displayEmployees(data);
+            })
+            .catch(error => console.error('Erro ao carregar funcionários:', error));
+    }
+
+    // Função para exibir funcionários
+    function displayEmployees(employees) {
+        employeeList.innerHTML = '';
+        if (employees.length === 0) {
+            employeeList.innerHTML = '<div class="no-results">Nenhum funcionário encontrado</div>';
+            return;
+        }
+
+        employees.forEach(employee => {
+            const card = document.createElement('div');
+            card.className = 'employee-card';
+            card.innerHTML = `
+                <h3>${employee.nome}</h3>
+                <p><strong>ID:</strong> ${employee.id}</p>
+                <p><strong>Cargo:</strong> ${employee.cargo || 'Não informado'}</p>
+            `;
+            card.addEventListener('click', () => {
+                window.location.href = `/myapp/funcionario/${employee.id}`;
+            });
+            employeeList.appendChild(card);
+        });
+    }
+
+    // Função para filtrar funcionários
+    function filterEmployees(query) {
+        query = query.toLowerCase();
+        const filtered = employees.filter(employee => 
+            employee.id.toString().includes(query) ||
+            employee.nome.toLowerCase().includes(query)
+        );
+        displayEmployees(filtered);
+    }
+
+    // Event listener para pesquisa
+    searchInput.addEventListener('input', (e) => {
+        filterEmployees(e.target.value);
+    });
+
+    // Carregar funcionários ao iniciar
+    loadEmployees();
+});
+</script> 

@@ -1,0 +1,93 @@
+[[extend 'layout.html']]
+<link rel="stylesheet" href="/myapp/static/css/main.css">
+
+<div class="section">
+  <div class="form-container">
+    <h2>Gerar Contrato</h2>
+    <form method="POST" action="[[=URL('gerar_contrato')]]" id="contratoForm">
+      <div class="form-group">
+        <label for="id_funcionario">ID do Funcionário:</label>
+        <input type="text" id="id_funcionario" name="id_funcionario" required autocomplete="off" placeholder="Digite o ID ou nome do funcionário">
+        <div id="suggestions" class="suggestions"></div>
+        <div id="error-message" class="error-message">Funcionário não encontrado</div>
+      </div>
+      <div class="form-group">
+        <label for="tipo_contrato">Tipo de Contrato:</label>
+        <select id="tipo_contrato" name="tipo_contrato" required>
+          <option value="contrato_entrada">Contrato de Admissão</option>
+          <option value="termo_uso">Termo de Uso de Aparelhos Eletrônicos</option>
+          <option value="sindicato">Contrato Sindicato</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button type="submit" class="button">Gerar PDF</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <a class="button" href="[[=URL('cadastrar_funcionario')]]">Cadastrar novo funcionário</a>
+    <a class="button" href="[[=URL('funcionarios')]]">Listar funcionários</a>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const idInput = document.getElementById('id_funcionario');
+    const suggestionsDiv = document.getElementById('suggestions');
+    const errorMessage = document.getElementById('error-message');
+    const form = document.getElementById('contratoForm');
+    let selectedId = null;
+
+    idInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        if (value.length > 0) {
+            fetch(`[[=URL('buscar_funcionario')]]?q=${encodeURIComponent(value)}`)
+                .then(response => response.json())
+                .then(data => {
+                    suggestionsDiv.innerHTML = '';
+                    if (data.length > 0) {
+                        data.forEach(funcionario => {
+                            const div = document.createElement('div');
+                            div.className = 'suggestion-item';
+                            div.textContent = `${funcionario.id} - ${funcionario.nome}`;
+                            div.addEventListener('click', function() {
+                                idInput.value = funcionario.id;
+                                selectedId = funcionario.id;
+                                suggestionsDiv.style.display = 'none';
+                                errorMessage.style.display = 'none';
+                                console.log('Funcionário selecionado:', funcionario);
+                            });
+                            suggestionsDiv.appendChild(div);
+                        });
+                        suggestionsDiv.style.display = 'block';
+                    } else {
+                        suggestionsDiv.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar funcionários:', error);
+                });
+        } else {
+            suggestionsDiv.style.display = 'none';
+        }
+    });
+
+    form.addEventListener('submit', function(e) {
+        if (!selectedId) {
+            e.preventDefault();
+            errorMessage.style.display = 'block';
+            console.error('Nenhum funcionário selecionado');
+        } else {
+            console.log('Enviando formulário com ID:', selectedId);
+        }
+    });
+
+    // Fechar sugestões quando clicar fora
+    document.addEventListener('click', function(e) {
+        if (!idInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+            suggestionsDiv.style.display = 'none';
+        }
+    });
+});
+</script>
