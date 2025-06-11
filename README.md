@@ -21,8 +21,8 @@ Sistema desenvolvido em Python utilizando Py4web para gerenciamento de contratos
 
 1. Clone o repositório:
 ```bash
-git clone [URL_DO_REPOSITÓRIO]
-cd [NOME_DO_DIRETÓRIO]
+git clone https://github.com/jessicakellyjkx/contrato_rh.git
+cd contrato_rh
 ```
 
 2. Crie um ambiente virtual Python:
@@ -61,7 +61,7 @@ py4web run apps
 
 3. Acesse o sistema em seu navegador:
 ```
-http://localhost:8000
+http://localhost:8000/myapp
 ```
 
 ## Estrutura do Projeto
@@ -71,14 +71,4 @@ http://localhost:8000
   - `templates/` - Templates HTML
   - `models/` - Modelos de dados
 
-## Contribuição
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes. 
