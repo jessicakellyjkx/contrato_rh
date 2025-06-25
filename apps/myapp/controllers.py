@@ -117,17 +117,17 @@ def gerar_contrato():
         
         # Preparar dados para o template
         dados = {
-            'nome_empresa': 'Nome da Empresa',  # Substitua pelo nome real da empresa
-            'cnpj': '00.000.000/0000-00',      # Substitua pelo CNPJ real
-            'endereco_empresa': 'Endereço da Empresa',  # Substitua pelo endereço real
+            'nome_empresa': 'Nome da Empresa',
+            'cnpj': '00.000.000/0000-00',      
+            'endereco_empresa': 'Endereço da Empresa', 
             'nome_funcionario': funcionario.nome,
             'data_nascimento': funcionario.data_nascicmento.strftime('%d/%m/%Y') if funcionario.data_nascicmento else '',
             'sexo': funcionario.sexo,
             'rg': funcionario.rg,
             'ctps': funcionario.ctps if hasattr(funcionario, 'ctps') else 'Nº da CTPS',
             'cargo': funcionario.cargo,
-            'carga_horaria': '40',  # Ajuste conforme necessário
-            'dias_semana': 'Segunda a Sexta',  # Ajuste conforme necessário
+            'carga_horaria': '40',  
+            'dias_semana': 'Segunda a Sexta',  
             'salario': f"R$ {funcionario.salario:.2f}" if funcionario.salario else '',
             'data_inicio': funcionario.data_entrada.strftime('%d/%m/%Y') if funcionario.data_entrada else '',
             'cidade': funcionario.cidade,
