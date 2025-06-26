@@ -1,4 +1,4 @@
-timestamp: 2025-03-30T15:03:26.845859
+timestamp: 2025-06-25T21:21:49.320833
 CREATE TABLE "auth_user"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "username" CHAR(512) UNIQUE,
@@ -12,14 +12,14 @@ CREATE TABLE "auth_user"(
     "past_passwords_hash" TEXT
 );
 success!
-timestamp: 2025-03-30T15:03:26.853112
+timestamp: 2025-06-25T21:21:49.328828
 CREATE TABLE "auth_user_tag_groups"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "tagpath" CHAR(512),
     "record_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE ON UPDATE CASCADE  
 );
 success!
-timestamp: 2025-05-06T20:58:16.943354
+timestamp: 2025-06-25T21:21:49.339551
 CREATE TABLE "funcionario"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "nome" CHAR(512),
@@ -27,111 +27,30 @@ CREATE TABLE "funcionario"(
     "rg" CHAR(512),
     "idade" INTEGER,
     "estado_civil" CHAR(512),
-    "sexo" CHAR(512)
-);
-success!
-timestamp: 2025-05-06T20:58:16.980728
-CREATE TABLE "endereco"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "funcionario_id" INTEGER REFERENCES "funcionario" ("id") ON DELETE CASCADE ON UPDATE CASCADE  ,
+    "sexo" CHAR(512),
+    "data_nascimento" DATE,
     "rua" CHAR(512),
     "bairro" CHAR(512),
     "cidade" CHAR(512),
     "cep" CHAR(512),
-    "estado" CHAR(512)
-);
-success!
-timestamp: 2025-05-06T20:58:16.987989
-CREATE TABLE "cargo"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "funcionario_id" INTEGER REFERENCES "funcionario" ("id") ON DELETE CASCADE ON UPDATE CASCADE  ,
+    "estado" CHAR(512),
     "data_entrada" DATE,
     "cargo" CHAR(512),
-    "salario" DOUBLE
+    "salario" DOUBLE,
+    "created_on" TIMESTAMP,
+    "updated_on" TIMESTAMP
 );
 success!
-timestamp: 2025-05-06T21:10:44.791838
-ALTER TABLE "funcionario" ADD "rua" CHAR(512);
-timestamp: 2025-05-06T21:10:44.809696
-ALTER TABLE "funcionario" ADD "bairro" CHAR(512);
-timestamp: 2025-05-06T21:10:44.816358
-ALTER TABLE "funcionario" ADD "cidade" CHAR(512);
-timestamp: 2025-05-06T21:10:44.823210
-ALTER TABLE "funcionario" ADD "cep" CHAR(512);
-timestamp: 2025-05-06T21:10:44.831215
-ALTER TABLE "funcionario" ADD "estado" CHAR(512);
-timestamp: 2025-05-06T21:10:44.837697
-ALTER TABLE "funcionario" ADD "data_entrada" DATE;
-timestamp: 2025-05-06T21:10:44.844151
-ALTER TABLE "funcionario" ADD "cargo" CHAR(512);
-timestamp: 2025-05-06T21:10:44.854462
-ALTER TABLE "funcionario" ADD "salario" DOUBLE;
-success!
-timestamp: 2025-05-06T21:16:21.258234
-ALTER TABLE "funcionario" ADD "data_nascicmento" DATE;
-success!
-timestamp: 2025-06-25T19:34:39.009780
-ALTER TABLE "funcionario" ADD "data_nascimento" DATE;
-success!
-timestamp: 2025-06-25T19:34:39.036945
+timestamp: 2025-06-25T21:21:49.347872
 CREATE TABLE "contrato"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "funcionario" INTEGER REFERENCES "funcionario" ("id") ON DELETE CASCADE ON UPDATE CASCADE  ,
     "arquivo" CHAR(512),
     "status" CHAR(512),
-    "data_geracao" TIMESTAMP
+    "data_geracao" TIMESTAMP,
+    "arquivo_assinado" CHAR(512),
+    "data_assinatura" TIMESTAMP,
+    "created_on" TIMESTAMP,
+    "updated_on" TIMESTAMP
 );
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2025-06-25T19:56:07.266464
-ALTER TABLE "contrato" ADD "arquivo_assinado" CHAR(512);
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2025-06-25T20:21:55.818936
-ALTER TABLE "funcionario" ADD "created_on" TIMESTAMP;
-timestamp: 2025-06-25T20:21:55.828178
-ALTER TABLE "funcionario" ADD "updated_on" TIMESTAMP;
-success!
-timestamp: 2025-06-25T20:21:55.861258
-ALTER TABLE "contrato" ADD "data_assinatura" TIMESTAMP;
-timestamp: 2025-06-25T20:21:55.870133
-ALTER TABLE "contrato" ADD "created_on" TIMESTAMP;
-timestamp: 2025-06-25T20:21:55.878076
-ALTER TABLE "contrato" ADD "updated_on" TIMESTAMP;
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
 success!

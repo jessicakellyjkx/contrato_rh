@@ -133,7 +133,14 @@ document.getElementById('uploadForm').onsubmit = function(e) {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        // Verificar se a resposta é JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Resposta do servidor não é JSON válido');
+        }
+        return response.json();
+    })
     .then(data => {
         document.getElementById('loading').style.display = 'none';
         
@@ -149,6 +156,7 @@ document.getElementById('uploadForm').onsubmit = function(e) {
     })
     .catch(error => {
         document.getElementById('loading').style.display = 'none';
+        console.error('Erro detalhado:', error);
         showMessage('Erro ao enviar arquivo: ' + error.message, 'error');
     });
 };
