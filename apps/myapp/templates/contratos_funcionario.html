@@ -1,0 +1,162 @@
+[[extend 'layout.html']]
+<link rel="stylesheet" href="/myapp/static/css/main.css">
+<link rel="stylesheet" href="/myapp/static/css/contratos_funcionario.css">
+
+<div class="center-wide">
+  <div class="card">
+    <h2>
+        <svg width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#2563eb" d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.828A2 2 0 0 0 19.414 7.414l-4.828-4.828A2 2 0 0 0 12.172 2H6Zm6 1.414L18.586 10H14a2 2 0 0 1-2-2V3.414ZM6 4h5v4a4 4 0 0 0 4 4h4v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4Zm2 12a1 1 0 1 1 0-2h8a1 1 0 1 1 0 2H8Z"/></svg>
+        Histórico de Contratos - [[=funcionario.nome]]
+    </h2>
+    
+    [[if not contratos:]]
+        <div style="text-align: center; padding: 40px 20px; color: #6b7280;">
+            <svg width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="margin-bottom: 16px;">
+                <path fill="#d1d5db" d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.828A2 2 0 0 0 19.414 7.414l-4.828-4.828A2 2 0 0 0 12.172 2H6Zm6 1.414L18.586 10H14a2 2 0 0 1-2-2V3.414ZM6 4h5v4a4 4 0 0 0 4 4h4v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4Zm2 12a1 1 0 1 1 0-2h8a1 1 0 1 1 0 2H8Z"/>
+            </svg>
+            <h3 style="margin: 0 0 8px 0; font-size: 1.2rem; color: #374151;">Nenhum contrato encontrado</h3>
+            <p style="margin: 0; font-size: 1rem;">Este funcionário ainda não possui contratos gerados.</p>
+        </div>
+    [[else:]]
+        <table class="table-contratos">
+            <thead>
+                <tr>
+                    <th style="width:38%">Arquivo</th>
+                    <th style="width:18%">Status</th>
+                    <th style="width:24%">Data de Geração</th>
+                    <th style="width:20%">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            [[for contrato in contratos:]]
+                <!-- DEBUG: [[=contrato.id]] - Status: [[=contrato.status]] - Arquivo: [[=contrato.arquivo]] - Arquivo Assinado: [[=contrato.arquivo_assinado]] -->
+                <tr>
+                    <td>
+                        [[=A(contrato.arquivo, _href=URL('uploads', contrato.arquivo), _target='_blank', _class='table-link')]]
+                        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#e53e3e" d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.828A2 2 0 0 0 19.414 7.414l-4.828-4.828A2 2 0 0 0 12.172 2H6Zm6 1.414L18.586 10H14a2 2 0 0 1-2-2V3.414ZM6 4h5v4a4 4 0 0 0 4 4h4v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4Zm2 12a1 1 0 1 1 0-2h8a1 1 0 1 1 0 2H8Z"/></svg>
+                    </td>
+                    <td>
+                        [[if contrato.status == 'assinado':]]
+                            <span class="badge-status assinado">Assinado</span>
+                        [[else:]]
+                            <span class="badge-status aguardando">Aguardando Assinatura</span>
+                        [[pass]]
+                    </td>
+                    <td>[[=contrato.data_geracao.strftime('%d/%m/%Y %H:%M') if contrato.data_geracao else '']]</td>
+                    <td>
+                        <div class="action-buttons">
+                            [[=A('Baixar', _href=URL('uploads', contrato.arquivo), _target='_blank', _class='button', _title='Baixar PDF')]]
+                            
+                            [[if contrato.status == 'aguardando assinatura':]]
+                                <button onclick="openUploadModal('[[=contrato.id]]')" class="button" title="Fazer upload do contrato assinado">Assinar</button>
+                            [[elif contrato.status == 'assinado' and contrato.arquivo_assinado:]]
+                                [[=A('Ver Assinado', _href=URL('uploads', contrato.arquivo_assinado), _target='_blank', _class='button', _title='Ver contrato assinado')]]
+                            [[pass]]
+                        </div>
+                    </td>
+                </tr>
+            [[pass]]
+            </tbody>
+        </table>
+    [[pass]]
+    
+    <div class="actions btns-flex">
+        [[=A('Voltar aos Detalhes', _href=URL('funcionario', funcionario.id), _class='button')]]
+        [[=A('Voltar para Lista', _href=URL('funcionarios'), _class='button')]]
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Upload -->
+<div id="uploadModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Enviar Contrato Assinado</h3>
+    <div class="message" id="message"></div>
+    <div class="loading" id="loading"></div>
+    <form class="upload-form" id="uploadForm">
+      <input type="file" name="arquivo_assinado" accept=".pdf,.doc,.docx" required>
+      <button type="submit" class="button">Enviar</button>
+    </form>
+  </div>
+</div>
+
+<script>
+let currentContratoId = null;
+
+function openUploadModal(contratoId) {
+    currentContratoId = contratoId;
+    document.getElementById('uploadModal').style.display = 'block';
+    document.getElementById('message').style.display = 'none';
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('uploadForm').reset();
+}
+
+// Fechar modal
+document.querySelector('.close').onclick = function() {
+    document.getElementById('uploadModal').style.display = 'none';
+}
+
+// Fechar modal clicando fora
+window.onclick = function(event) {
+    let modal = document.getElementById('uploadModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Enviar formulário
+document.getElementById('uploadForm').onsubmit = function(e) {
+    e.preventDefault();
+    
+    if (!currentContratoId) {
+        showMessage('Erro: ID do contrato não encontrado', 'error');
+        return;
+    }
+    
+    const formData = new FormData();
+    const fileInput = document.querySelector('input[name="arquivo_assinado"]');
+    
+    if (!fileInput.files[0]) {
+        showMessage('Por favor, selecione um arquivo', 'error');
+        return;
+    }
+    
+    formData.append('arquivo_assinado', fileInput.files[0]);
+    
+    // Mostrar loading
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('message').style.display = 'none';
+    
+    // Fazer upload via AJAX
+    fetch(`/myapp/upload_contrato_assinado/${currentContratoId}`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('loading').style.display = 'none';
+        
+        if (data.success) {
+            showMessage(data.message, 'success');
+            // Recarregar a página após 2 segundos para mostrar o novo status
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            showMessage(data.message, 'error');
+        }
+    })
+    .catch(error => {
+        document.getElementById('loading').style.display = 'none';
+        showMessage('Erro ao enviar arquivo: ' + error.message, 'error');
+    });
+};
+
+function showMessage(text, type) {
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = text;
+    messageDiv.className = `message ${type}`;
+    messageDiv.style.display = 'block';
+}
+</script> 

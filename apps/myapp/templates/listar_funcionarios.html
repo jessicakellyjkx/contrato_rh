@@ -1,5 +1,6 @@
 [[extend 'layout.html']]
 <link rel="stylesheet" href="/myapp/static/css/main.css">
+<link rel="stylesheet" href="/myapp/static/css/listar_funcionarios.css">
 
 <div class="section">
   <div class="form-container" style="max-width:1200px;">
@@ -44,13 +45,12 @@ document.addEventListener('DOMContentLoaded', function() {
         employees.forEach(employee => {
             const card = document.createElement('div');
             card.className = 'employee-card';
-            card.innerHTML = `
-                <h3>${employee.nome}</h3>
-                <p><strong>ID:</strong> ${employee.id}</p>
-                <p><strong>Cargo:</strong> ${employee.cargo || 'Não informado'}</p>
-            `;
+            card.innerHTML = 
+                '<h3>' + employee.nome + '</h3>' +
+                '<p><strong>ID:</strong> ' + employee.id + '</p>' +
+                '<p><strong>Cargo:</strong> ' + (employee.cargo || 'Não informado') + '</p>';
             card.addEventListener('click', () => {
-                window.location.href = `/myapp/funcionario/${employee.id}`;
+                window.location.href = '/myapp/funcionario/' + employee.id;
             });
             employeeList.appendChild(card);
         });

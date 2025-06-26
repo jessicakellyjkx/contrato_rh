@@ -70,3 +70,68 @@ success!
 timestamp: 2025-05-06T21:16:21.258234
 ALTER TABLE "funcionario" ADD "data_nascicmento" DATE;
 success!
+timestamp: 2025-06-25T19:34:39.009780
+ALTER TABLE "funcionario" ADD "data_nascimento" DATE;
+success!
+timestamp: 2025-06-25T19:34:39.036945
+CREATE TABLE "contrato"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "funcionario" INTEGER REFERENCES "funcionario" ("id") ON DELETE CASCADE ON UPDATE CASCADE  ,
+    "arquivo" CHAR(512),
+    "status" CHAR(512),
+    "data_geracao" TIMESTAMP
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2025-06-25T19:56:07.266464
+ALTER TABLE "contrato" ADD "arquivo_assinado" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2025-06-25T20:21:55.818936
+ALTER TABLE "funcionario" ADD "created_on" TIMESTAMP;
+timestamp: 2025-06-25T20:21:55.828178
+ALTER TABLE "funcionario" ADD "updated_on" TIMESTAMP;
+success!
+timestamp: 2025-06-25T20:21:55.861258
+ALTER TABLE "contrato" ADD "data_assinatura" TIMESTAMP;
+timestamp: 2025-06-25T20:21:55.870133
+ALTER TABLE "contrato" ADD "created_on" TIMESTAMP;
+timestamp: 2025-06-25T20:21:55.878076
+ALTER TABLE "contrato" ADD "updated_on" TIMESTAMP;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

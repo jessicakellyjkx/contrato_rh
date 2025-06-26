@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    line-height: 1.6;
+}
+
+h1 {
+    text-align: center;
+}
+
+.contrato {
+    border: 1px solid #000;
+    padding: 20px;
+}
+
+.campo {
+    margin-bottom: 10px;
+}
+
+.assinaturas {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.assinatura {
+    width: 45%;
+    text-align: center;
+}
+
+.dados-pessoais {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+} 

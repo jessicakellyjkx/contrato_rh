@@ -1,5 +1,6 @@
 [[extend 'layout.html']]
 <link rel="stylesheet" href="/myapp/static/css/main.css">
+<link rel="stylesheet" href="/myapp/static/css/funcionario_detalhe.css">
 
 <div class="section">
   <div class="form-container" style="max-width:600px;">
@@ -9,7 +10,7 @@
       <div class="detail-row"><span class="detail-label">ID:</span> [[=funcionario.id]]</div>
       <div class="detail-row"><span class="detail-label">CPF:</span> [[=funcionario.cpf]]</div>
       <div class="detail-row"><span class="detail-label">RG:</span> [[=funcionario.rg]]</div>
-      <div class="detail-row"><span class="detail-label">Data de Nascimento:</span> [[=funcionario.data_nascicmento]]</div>
+      <div class="detail-row"><span class="detail-label">Data de Nascimento:</span> [[=funcionario.data_nascimento]]</div>
       <div class="detail-row"><span class="detail-label">Idade:</span> [[=funcionario.idade]]</div>
       <div class="detail-row"><span class="detail-label">Estado Civil:</span> [[=funcionario.estado_civil]]</div>
       <div class="detail-row"><span class="detail-label">Sexo:</span> [[=funcionario.sexo]]</div>
@@ -18,8 +19,9 @@
       <div class="detail-row"><span class="detail-label">Data de Entrada:</span> [[=funcionario.data_entrada]]</div>
       <div class="detail-row"><span class="detail-label">Salário:</span> R$ [[=funcionario.salario]]</div>
     </div>
-    <div class="actions">
+    <div class="actions btns-flex">
       <a href="[[=URL('funcionarios')]]" class="button">Voltar para Lista</a>
+      <a href="[[=URL('funcionario', funcionario.id, 'contratos')]]" class="button">Ver Contratos</a>
     </div>
   </div>
 </div> 
